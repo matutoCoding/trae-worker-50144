@@ -1,0 +1,58 @@
+@use '@/styles/variables.scss' as *;
+
+.statCard {
+  @include card;
+  padding: $spacing-lg;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4rpx;
+    background: $gradient-primary;
+  }
+}
+
+.ethnicAccent::before {
+  background: $gradient-ethnic;
+}
+
+.goldAccent::before {
+  background: $gradient-gold;
+}
+
+.value {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  
+  .unit {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-regular;
+    color: $color-text-secondary;
+    margin-left: $spacing-xs;
+  }
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.icon {
+  position: absolute;
+  right: $spacing-lg;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  background: $color-bg-secondary;
+  @include flex-center;
+  font-size: 32rpx;
+}

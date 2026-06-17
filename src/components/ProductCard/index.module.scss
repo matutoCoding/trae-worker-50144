@@ -1,0 +1,66 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  @include card;
+  overflow: hidden;
+  
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 240rpx;
+  background: $color-bg-secondary;
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.stockBadge {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  background: rgba(0, 0, 0, 0.6);
+  color: $color-text-white;
+  font-size: $font-size-xs;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+}
+
+.content {
+  padding: $spacing-md;
+}
+
+.name {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  @include text-ellipsis;
+}
+
+.specs {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-sm;
+}
+
+.footer {
+  @include flex-between;
+}
+
+.price {
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+  color: $color-price;
+}
+
+.weight {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}

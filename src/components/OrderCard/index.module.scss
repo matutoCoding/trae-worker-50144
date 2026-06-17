@@ -1,0 +1,113 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  @include card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+}
+
+.orderNo {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.status {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-round;
+}
+
+.pending {
+  background: $color-warning-light;
+  color: $color-warning;
+}
+
+.melting, .drawing, .engraving, .welding, .polishing {
+  background: $color-info-light;
+  color: $color-info;
+}
+
+.finished {
+  background: $color-success-light;
+  color: $color-success;
+}
+
+.delivered {
+  background: $color-bg-secondary;
+  color: $color-text-secondary;
+}
+
+.productName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.customer {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+}
+
+.progress {
+  margin-bottom: $spacing-md;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8rpx;
+  background: $color-bg-secondary;
+  border-radius: $radius-round;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: $gradient-ethnic;
+  border-radius: $radius-round;
+  transition: width $transition-slow;
+}
+
+.progressText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+}
+
+.footer {
+  @include flex-between;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-border-light;
+}
+
+.type {
+  font-size: $font-size-xs;
+  color: $color-ethnic-red;
+  background: rgba(139, 0, 0, 0.08);
+  padding: 4rpx 16rpx;
+  border-radius: $radius-xs;
+}
+
+.price {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-price;
+  
+  .label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-regular;
+    color: $color-text-secondary;
+    margin-right: $spacing-xs;
+  }
+}

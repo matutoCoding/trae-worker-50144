@@ -1,0 +1,88 @@
+@use '@/styles/variables.scss' as *;
+
+.stepItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-lg 0;
+  position: relative;
+  
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 27rpx;
+    top: 72rpx;
+    bottom: 0;
+    width: 2rpx;
+    background: $color-border-light;
+  }
+}
+
+.stepDot {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  background: $color-bg-secondary;
+  @include flex-center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  
+  .stepNum {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-text-tertiary;
+  }
+}
+
+.active .stepDot {
+  background: $gradient-ethnic;
+  
+  .stepNum {
+    color: $color-text-white;
+  }
+}
+
+.completed .stepDot {
+  background: $color-success;
+  
+  .stepNum {
+    color: $color-text-white;
+  }
+}
+
+.stepContent {
+  flex: 1;
+  padding-bottom: $spacing-sm;
+}
+
+.stepName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.active .stepName {
+  color: $color-ethnic-red;
+}
+
+.stepDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.5;
+}
+
+.stepMeta {
+  display: flex;
+  gap: $spacing-md;
+  margin-top: $spacing-sm;
+}
+
+.metaItem {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  background: $color-bg-secondary;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+}

@@ -1,0 +1,284 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: calc(#{$tab-bar-height} + #{$safe-area-bottom});
+}
+
+.header {
+  background: $gradient-ethnic;
+  padding: $spacing-xl $page-padding;
+  padding-top: calc(#{$spacing-xl} + #{$spacing-md});
+}
+
+.title {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.summaryCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-top: $spacing-lg;
+  box-shadow: $shadow-float;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.summaryItem {
+  text-align: left;
+  flex: 1;
+}
+
+.summaryLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: 4rpx;
+}
+
+.summaryValue {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  
+  &.income {
+    color: $color-success;
+  }
+  
+  &.expense {
+    color: $color-error;
+  }
+  
+  &.profit {
+    color: $color-ethnic-red;
+  }
+}
+
+.tabs {
+  display: flex;
+  gap: $spacing-xs;
+  padding: $spacing-md $page-padding;
+  background: $color-bg-page;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: $spacing-sm 0;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  transition: all $transition-base;
+  box-shadow: $shadow-card;
+}
+
+.activeTab {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.section {
+  padding: 0 $page-padding;
+}
+
+.sectionHeader {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.decor {
+  width: 6rpx;
+  height: $font-size-md;
+  background: $gradient-ethnic;
+  border-radius: $radius-xs;
+}
+
+.titleText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.actionBtn {
+  font-size: $font-size-sm;
+  color: $color-ethnic-red;
+}
+
+.productGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.productItem {
+  width: calc(50% - #{$spacing-md} / 2);
+}
+
+.customerList {
+  margin-bottom: $spacing-lg;
+}
+
+.ledgerList {
+  margin-bottom: $spacing-lg;
+}
+
+.ledgerItem {
+  @include card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.ledgerIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-round;
+  background: $color-bg-secondary;
+  @include flex-center;
+  font-size: 36rpx;
+  flex-shrink: 0;
+}
+
+.incomeIcon {
+  background: rgba(46, 125, 50, 0.08);
+}
+
+.expenseIcon {
+  background: rgba(198, 40, 40, 0.08);
+}
+
+.ledgerInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.ledgerTitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+  @include text-ellipsis;
+}
+
+.ledgerDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  @include text-ellipsis;
+}
+
+.ledgerAmount {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.amountValue {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  
+  &.income {
+    color: $color-success;
+  }
+  
+  &.expense {
+    color: $color-error;
+  }
+}
+
+.amountTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.categoryFilter {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.filterTag {
+  padding: $spacing-xs $spacing-md;
+  background: $color-bg-card;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  box-shadow: $shadow-card;
+}
+
+.activeFilter {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+}
+
+.statGrid {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.statCard {
+  flex: 1;
+  @include card;
+  padding: $spacing-md;
+  text-align: center;
+}
+
+.statNum {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-ethnic-red;
+  margin-bottom: 4rpx;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-xxl 0;
+}
+
+.emptyIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}

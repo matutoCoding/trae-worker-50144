@@ -1,0 +1,182 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: calc(#{$tab-bar-height} + #{$safe-area-bottom});
+}
+
+.header {
+  background: $gradient-silver;
+  padding: $spacing-xl $page-padding;
+  padding-top: calc(#{$spacing-xl} + #{$spacing-md});
+}
+
+.title {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.searchBar {
+  margin-top: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  background: $color-bg-card;
+  border-radius: $radius-button;
+  padding: $spacing-sm $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.searchIcon {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}
+
+.searchInput {
+  flex: 1;
+  font-size: $font-size-base;
+  color: $color-text-primary;
+  background: transparent;
+}
+
+.categoryTabs {
+  @include scroll-x-container;
+  padding: $spacing-md $page-padding;
+  padding-top: $spacing-lg;
+  background: $color-bg-page;
+}
+
+.tabItem {
+  @include scroll-x-item(auto);
+  padding: $spacing-sm $spacing-lg;
+  margin-right: $spacing-sm;
+  border-radius: $radius-button;
+  background: $color-bg-card;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  white-space: nowrap;
+  transition: all $transition-base;
+  
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.activeTab {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.section {
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-xl;
+}
+
+.sectionHeader {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.decor {
+  width: 6rpx;
+  height: $font-size-md;
+  background: $gradient-ethnic;
+  border-radius: $radius-xs;
+}
+
+.titleText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.more {
+  font-size: $font-size-sm;
+  color: $color-ethnic-red;
+}
+
+.patternGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+}
+
+.patternItem {
+  width: calc(50% - #{$spacing-md} / 2);
+}
+
+.meaningCard {
+  @include card;
+  padding: $spacing-lg;
+  background: linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 100%);
+}
+
+.meaningTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-ethnic-red;
+  margin-bottom: $spacing-sm;
+}
+
+.meaningContent {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.6;
+}
+
+.productScroll {
+  @include scroll-x-container;
+  margin: 0 (-$page-padding);
+  padding: 0 $page-padding;
+}
+
+.productItem {
+  @include scroll-x-item(280rpx);
+  margin-right: $spacing-md;
+  
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.featuredSection {
+  background: $color-bg-card;
+  padding: $spacing-lg $page-padding;
+  margin-bottom: $spacing-md;
+}
+
+.featuredGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.tag {
+  padding: $spacing-xs $spacing-md;
+  background: $color-bg-secondary;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.ethnicTag {
+  background: rgba(139, 0, 0, 0.08);
+  color: $color-ethnic-red;
+}

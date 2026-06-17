@@ -1,0 +1,361 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: calc(#{$tab-bar-height} + #{$safe-area-bottom});
+}
+
+.header {
+  background: linear-gradient(180deg, #2C2C2C 0%, #4A4A4A 100%);
+  padding: $spacing-xl $page-padding;
+  padding-top: calc(#{$spacing-xl} + #{$spacing-md});
+}
+
+.title {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-silver-light;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+.statItem {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  text-align: center;
+  backdrop-filter: blur(10rpx);
+}
+
+.statValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-gold;
+  margin-bottom: 4rpx;
+  
+  .unit {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-regular;
+    margin-left: 4rpx;
+  }
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.section {
+  padding: $spacing-lg $page-padding;
+}
+
+.sectionHeader {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.decor {
+  width: 6rpx;
+  height: $font-size-md;
+  background: $gradient-gold;
+  border-radius: $radius-xs;
+}
+
+.titleText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.actionBtn {
+  font-size: $font-size-sm;
+  color: $color-ethnic-red;
+}
+
+.tabs {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-xs;
+  box-shadow: $shadow-card;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: $spacing-sm 0;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  transition: all $transition-base;
+}
+
+.activeTab {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.processCard {
+  @include card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.processHeader {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+}
+
+.processOrder {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.processStatus {
+  font-size: $font-size-xs;
+  color: $color-ethnic-red;
+  background: rgba(139, 0, 0, 0.08);
+  padding: 4rpx 16rpx;
+  border-radius: $radius-round;
+}
+
+.processProduct {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+}
+
+.stepsHorizontal {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.stepPoint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.stepDot {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  background: $color-bg-secondary;
+  @include flex-center;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+}
+
+.active .stepDot {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+  box-shadow: 0 4rpx 12rpx rgba(139, 0, 0, 0.3);
+}
+
+.completed .stepDot {
+  background: $color-success;
+  color: $color-text-white;
+}
+
+.stepName {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  text-align: center;
+}
+
+.active .stepName {
+  color: $color-ethnic-red;
+  font-weight: $font-weight-medium;
+}
+
+.stepLine {
+  position: absolute;
+  top: 24rpx;
+  left: 0;
+  right: 0;
+  height: 2rpx;
+  background: $color-border-light;
+  z-index: 0;
+}
+
+.stepLineFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: $color-success;
+  transition: width $transition-slow;
+}
+
+.silverList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.silverCard {
+  @include card;
+  padding: $spacing-lg;
+}
+
+.silverHeader {
+  @include flex-between;
+  margin-bottom: $spacing-sm;
+}
+
+.silverName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.silverType {
+  font-size: $font-size-xs;
+  color: $color-ethnic-red;
+  background: rgba(139, 0, 0, 0.08);
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+}
+
+.silverInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: $spacing-sm;
+  padding-top: $spacing-sm;
+  border-top: 1rpx solid $color-border-light;
+}
+
+.infoItem {
+  text-align: left;
+}
+
+.infoLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: 4rpx;
+}
+
+.infoValue {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  
+  &.weight {
+    color: $color-gold;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.actionRow {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.actionBtnCard {
+  flex: 1;
+  @include card;
+  padding: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.actionBtnIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  background: rgba(139, 0, 0, 0.08);
+  @include flex-center;
+  font-size: 32rpx;
+}
+
+.actionBtnText {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
+.processDetail {
+  @include card;
+  padding: $spacing-lg;
+  margin-top: $spacing-md;
+}
+
+.processDetailTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.processDetailDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  margin-bottom: $spacing-md;
+}
+
+.processTools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-md;
+}
+
+.toolTag {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  background: $color-bg-secondary;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+}
+
+.tips {
+  background: rgba(245, 124, 0, 0.08);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+}
+
+.tipsTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-warning;
+  margin-bottom: $spacing-xs;
+}
+
+.tipsContent {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  line-height: 1.5;
+}

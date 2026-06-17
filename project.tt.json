@@ -1,0 +1,10 @@
+{
+  "projectname": "miao-silver-workshop",
+  "appid": "ttXXXXXXXXXXXX",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true
+  }
+}
