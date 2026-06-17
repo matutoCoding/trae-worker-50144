@@ -3,35 +3,44 @@ import { View, Text, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import classNames from 'classnames';
 import SectionTitle from '@/components/SectionTitle';
-import { orders, processSteps } from '@/data/orders';
-import { silverMaterials, silverTypes, processSteps as processDetailSteps } from '@/data/silver';
+import { useWorkshopStore } from '@/store/useWorkshopStore';
+import { processSteps } from '@/data/orders';
+import { silverTypes, processSteps as processDetailSteps } from '@/data/silver';
 import { formatWeight } from '@/utils';
 import styles from './index.module.scss';
 
 const WorkshopPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'process' | 'silver'>('process');
   const [selectedStepIndex, setSelectedStepIndex] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { orders, silverMaterials, getSilverTotalWeight, getSilverByType } = useWorkshopStore();
 
   const inProgressOrders = useMemo(() => {
     return orders.filter(
       (o) => !['finished', 'delivered'].includes(o.status) && o.status !== 'pending'
     );
-  }, []);
+  }, [orders]);
 
-  const totalSilverWeight = useMemo(() => {
-    return silverMaterials.reduce((sum, item) => sum + item.weight, 0);
-  }, []);
+  const totalSilverWeight = useMemo(() => getSilverTotalWeight(), [silverMaterials]);
+  const ingotStock = useMemo(() => getSilverByType('ingot'), [silverMaterials]);
+  const wireStock = useMemo(() => getSilverByType('wire'), [silverMaterials]);
+  const sheetStock = useMemo(() => getSilverByType('sheet'), [silverMaterials]);
 
   const pendingCount = useMemo(() => {
     return orders.filter((o) => o.status === 'pending').length;
-  }, []);
+  }, [orders]);
 
   const handleAddSilver = () => {
-    console.log('[Workshop] 新增银料入库');
-    Taro.showToast({
-      title: '功能开发中',
-      icon: 'none',
-    });
+    Taro.navigateTo({ url: '/pages/silver-form/index' });
+  };
+
+  const goToSilverPage = () => {
+    Taro.navigateTo({ url: '/pages/silver/index' });
+  };
+
+  const goToProcessPage = () => {
+    Taro.navigateTo({ url: '/pages/process/index' });
   };
 
   const handleProcessClick = (orderId: string) => {
@@ -44,6 +53,14 @@ const WorkshopPage: React.FC = () => {
     setSelectedStepIndex(index);
   };
 
+  const handleRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      Taro.stopPullDownRefresh();
+    }, 500);
+  };
+
   const getStepStatus = (orderCurrentStep: number, stepIndex: number) => {
     if (stepIndex < orderCurrentStep) return 'completed';
     if (stepIndex === orderCurrentStep - 1) return 'active';
@@ -52,15 +69,18 @@ const WorkshopPage: React.FC = () => {
 
   const selectedStep = processDetailSteps[selectedStepIndex];
 
+  const activeSilverMaterials = useMemo(
+    () => silverMaterials.filter((s) => s.weight > 0),
+    [silverMaterials]
+  );
+
   return (
     <ScrollView
       className={styles.page}
       scrollY
-      onRefresherRefresh={() => {
-        console.log('[Workshop] 页面刷新');
-        Taro.stopPullDownRefresh();
-      }}
+      onRefresherRefresh={handleRefresh}
       refresherEnabled
+      refresherTriggered={refreshing}
     >
       <View className={styles.header}>
         <Text className={styles.title}>锻造工坊</Text>
@@ -112,9 +132,9 @@ const WorkshopPage: React.FC = () => {
 
         {activeTab === 'process' && (
           <>
-            <SectionTitle title="进行中的订单" actionText="全部订单 →" />
+            <SectionTitle title="进行中的订单" actionText="全部工序 →" onActionClick={goToProcessPage} />
             
-            {inProgressOrders.map((order) => (
+            {inProgressOrders.slice(0, 3).map((order) => (
               <View
                 key={order.id}
                 className={styles.processCard}
@@ -153,6 +173,14 @@ const WorkshopPage: React.FC = () => {
                 </View>
               </View>
             ))}
+
+            {inProgressOrders.length === 0 && (
+              <View className={styles.emptyTip}>
+                <Text style={{ fontSize: 24, color: '#999', textAlign: 'center', padding: '32rpx 0' }}>
+                  暂无进行中的订单
+                </Text>
+              </View>
+            )}
 
             <SectionTitle title="工序详解" />
             <View className={styles.actionRow}>
@@ -197,7 +225,26 @@ const WorkshopPage: React.FC = () => {
 
         {activeTab === 'silver' && (
           <>
-            <SectionTitle title="银料库存" actionText="+ 入库登记" />
+            <SectionTitle title="银料库存" actionText="全部库存 →" onActionClick={goToSilverPage} />
+            
+            <View className={styles.stockSummary}>
+              <View className={styles.stockItem}>
+                <Text className={styles.stockValue}>{formatWeight(totalSilverWeight)}</Text>
+                <Text className={styles.stockLabel}>总库存</Text>
+              </View>
+              <View className={styles.stockItem}>
+                <Text className={styles.stockValue}>{formatWeight(ingotStock)}</Text>
+                <Text className={styles.stockLabel}>银锭</Text>
+              </View>
+              <View className={styles.stockItem}>
+                <Text className={styles.stockValue}>{formatWeight(wireStock)}</Text>
+                <Text className={styles.stockLabel}>银丝</Text>
+              </View>
+              <View className={styles.stockItem}>
+                <Text className={styles.stockValue}>{formatWeight(sheetStock)}</Text>
+                <Text className={styles.stockLabel}>银片</Text>
+              </View>
+            </View>
             
             <View className={styles.actionRow}>
               <View className={styles.actionBtnCard} onClick={handleAddSilver}>
@@ -211,11 +258,13 @@ const WorkshopPage: React.FC = () => {
             </View>
 
             <View className={styles.silverList}>
-              {silverMaterials.map((item) => (
+              {activeSilverMaterials.slice(0, 5).map((item) => (
                 <View key={item.id} className={styles.silverCard}>
                   <View className={styles.silverHeader}>
                     <Text className={styles.silverName}>{item.name}</Text>
-                    <View className={styles.silverType}>{item.typeName}</View>
+                    <View className={styles.silverType}>
+                      {silverTypes.find((t) => t.id === item.type)?.name}
+                    </View>
                   </View>
                   <View className={styles.silverInfo}>
                     <View className={styles.infoItem}>

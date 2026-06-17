@@ -162,3 +162,45 @@
   font-size: $font-size-sm;
   color: $color-text-tertiary;
 }
+
+.quickNav {
+  padding: 0 $page-padding $spacing-lg;
+}
+
+.quickNavItem {
+  @include card;
+  padding: $spacing-md $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.quickNavIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-lg;
+  background: $gradient-ethnic;
+  @include flex-center;
+  font-size: 40rpx;
+  flex-shrink: 0;
+}
+
+.quickNavText {
+  flex: 1;
+}
+
+.quickNavTitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+}
+
+.quickNavDesc {
+  font-size: $font-size-xs;
+  color: $color-gold;
+}

@@ -3,12 +3,16 @@ import { View, Text, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import classNames from 'classnames';
 import OrderCard from '@/components/OrderCard';
-import { orders, orderStatusList, orderTypeList } from '@/data/orders';
+import { useWorkshopStore } from '@/store/useWorkshopStore';
+import { orderStatusList, orderTypeList } from '@/data/orders';
 import styles from './index.module.scss';
 
 const OrderPage: React.FC = () => {
   const [activeStatus, setActiveStatus] = useState('all');
   const [activeType, setActiveType] = useState('all');
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { orders } = useWorkshopStore();
 
   const filteredOrders = useMemo(() => {
     return orders.filter((order) => {
@@ -30,39 +34,40 @@ const OrderPage: React.FC = () => {
       }
 
       return matchStatus && matchType;
-    });
-  }, [activeStatus, activeType]);
+    }).sort((a, b) => new Date(b.createTime).getTime() - new Date(a.createTime).getTime());
+  }, [orders, activeStatus, activeType]);
 
   const stats = useMemo(() => {
     const pending = orders.filter((o) => o.status === 'pending').length;
     const inProgress = orders.filter(
       (o) => !['finished', 'delivered'].includes(o.status) && o.status !== 'pending'
     ).length;
-    const finished = orders.filter((o) => o.status === 'finished').length;
+    const finished = orders.filter((o) => o.status === 'finished' || o.status === 'delivered').length;
     return { pending, inProgress, finished };
-  }, []);
+  }, [orders]);
 
-  const handleNewOrder = () => {
-    console.log('[Order] 新建定制订单');
-    Taro.showToast({
-      title: '功能开发中',
-      icon: 'none',
-    });
-  };
-
-  const handleExchange = () => {
-    console.log('[Order] 以旧换新');
-    Taro.showToast({
-      title: '功能开发中',
-      icon: 'none',
+  const handleNewOrder = (type: 'custom' | 'exchange' | 'wholesale') => {
+    Taro.navigateTo({
+      url: `/pages/order-form/index?type=${type}`,
     });
   };
 
   const handleRefresh = () => {
-    console.log('[Order] 页面刷新');
+    setRefreshing(true);
     setTimeout(() => {
+      setRefreshing(false);
       Taro.stopPullDownRefresh();
     }, 500);
+  };
+
+  const handleCardClick = (orderId: string) => {
+    Taro.navigateTo({
+      url: `/pages/order-detail/index?id=${orderId}`,
+    });
+  };
+
+  const goToProcess = () => {
+    Taro.navigateTo({ url: '/pages/process/index' });
   };
 
   return (
@@ -71,6 +76,7 @@ const OrderPage: React.FC = () => {
       scrollY
       onRefresherRefresh={handleRefresh}
       refresherEnabled
+      refresherTriggered={refreshing}
     >
       <View className={styles.header}>
         <Text className={styles.title}>订单定制</Text>
@@ -93,20 +99,30 @@ const OrderPage: React.FC = () => {
       </View>
 
       <View className={styles.actionGrid}>
-        <View className={styles.actionCard} onClick={handleNewOrder}>
+        <View className={styles.actionCard} onClick={() => handleNewOrder('custom')}>
           <View className={styles.actionIcon}>✏️</View>
           <Text className={styles.actionTitle}>专属定制</Text>
           <Text className={styles.actionDesc}>新建定制订单</Text>
         </View>
-        <View className={styles.actionCard} onClick={handleExchange}>
+        <View className={styles.actionCard} onClick={() => handleNewOrder('exchange')}>
           <View className={classNames(styles.actionIcon, styles.goldIcon)}>♻️</View>
           <Text className={styles.actionTitle}>以旧换新</Text>
           <Text className={styles.actionDesc}>旧银饰换新</Text>
         </View>
-        <View className={styles.actionCard} onClick={handleNewOrder}>
+        <View className={styles.actionCard} onClick={() => handleNewOrder('wholesale')}>
           <View className={styles.actionIcon}>📦</View>
           <Text className={styles.actionTitle}>批发订单</Text>
           <Text className={styles.actionDesc}>批量订货</Text>
+        </View>
+      </View>
+
+      <View className={styles.quickNav}>
+        <View className={styles.quickNavItem} onClick={goToProcess}>
+          <View className={styles.quickNavIcon}>🔨</View>
+          <View className={styles.quickNavText}>
+            <Text className={styles.quickNavTitle}>锻造工序</Text>
+            <Text className={styles.quickNavDesc}>查看生产进度 →</Text>
+          </View>
         </View>
       </View>
 
@@ -148,12 +164,17 @@ const OrderPage: React.FC = () => {
 
       <View className={styles.orderList}>
         {filteredOrders.map((order) => (
-          <OrderCard key={order.id} order={order} />
+          <View key={order.id} onClick={() => handleCardClick(order.id)}>
+            <OrderCard order={order} />
+          </View>
         ))}
         {filteredOrders.length === 0 && (
           <View className={styles.emptyState}>
             <View className={styles.emptyIcon}>📋</View>
             <Text className={styles.emptyText}>暂无相关订单</Text>
+            <Text style={{ marginTop: 16, fontSize: 24, color: '#999' }}>
+              点击上方卡片创建新订单
+            </Text>
           </View>
         )}
       </View>

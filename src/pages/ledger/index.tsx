@@ -4,10 +4,10 @@ import Taro from '@tarojs/taro';
 import classNames from 'classnames';
 import ProductCard from '@/components/ProductCard';
 import CustomerCard from '@/components/CustomerCard';
-import { products } from '@/data/products';
-import { customers } from '@/data/customers';
-import { ledgerRecords, ledgerCategories, workshopStats } from '@/data/ledger';
-import { formatMoney, formatDate } from '@/utils';
+import { useWorkshopStore } from '@/store/useWorkshopStore';
+import { incomeCategories, expenseCategories } from '@/data/ledger';
+import { formatCurrency, formatDate } from '@/utils';
+import type { Product, Customer } from '@/types';
 import styles from './index.module.scss';
 
 type TabType = 'product' | 'customer' | 'ledger';
@@ -15,6 +15,9 @@ type TabType = 'product' | 'customer' | 'ledger';
 const LedgerPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('ledger');
   const [ledgerFilter, setLedgerFilter] = useState<'all' | 'income' | 'expense'>('all');
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { products, customers, ledgerRecords } = useWorkshopStore();
 
   const monthSummary = useMemo(() => {
     const income = ledgerRecords
@@ -28,22 +31,92 @@ const LedgerPage: React.FC = () => {
       expense,
       profit: income - expense,
     };
-  }, []);
+  }, [ledgerRecords]);
+
+  const todayIncome = useMemo(() => {
+    const today = formatDate(new Date());
+    return ledgerRecords
+      .filter((r) => r.type === 'income' && r.createTime.startsWith(today))
+      .reduce((sum, r) => sum + r.amount, 0);
+  }, [ledgerRecords]);
 
   const filteredRecords = useMemo(() => {
-    if (ledgerFilter === 'all') return ledgerRecords;
-    return ledgerRecords.filter((r) => r.type === ledgerFilter);
-  }, [ledgerFilter]);
+    let list = ledgerRecords;
+    if (ledgerFilter !== 'all') {
+      list = list.filter((r) => r.type === ledgerFilter);
+    }
+    return list.sort((a, b) => new Date(b.createTime).getTime() - new Date(a.createTime).getTime());
+  }, [ledgerRecords, ledgerFilter]);
+
+  const vipCount = useMemo(
+    () => customers.filter((c) => c.level !== 'regular').length,
+    [customers]
+  );
+
+  const stats = useMemo(() => {
+    const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
+    return {
+      productCount: products.length,
+      productStock: totalStock,
+      customerCount: customers.length,
+      vipCount,
+    };
+  }, [products, customers, vipCount]);
 
   const getCategoryName = (type: string, category: string) => {
-    const cats = type === 'income' ? ledgerCategories.income : ledgerCategories.expense;
+    const cats = type === 'income' ? incomeCategories : expenseCategories;
     const found = cats.find((c) => c.id === category);
     return found ? found.name : category;
   };
 
+  const getCategoryIcon = (type: string, category: string) => {
+    const cats = type === 'income' ? incomeCategories : expenseCategories;
+    const found = cats.find((c) => c.id === category);
+    return found ? found.icon : '📝';
+  };
+
   const handleRefresh = () => {
-    console.log('[Ledger] 页面刷新');
-    Taro.stopPullDownRefresh();
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      Taro.stopPullDownRefresh();
+    }, 500);
+  };
+
+  const handleAddLedger = () => {
+    Taro.navigateTo({ url: '/pages/ledger-form/index' });
+  };
+
+  const handleAddProduct = () => {
+    Taro.navigateTo({ url: '/pages/product-form/index' });
+  };
+
+  const handleAddCustomer = () => {
+    Taro.navigateTo({ url: '/pages/customer-form/index' });
+  };
+
+  const goToSales = () => {
+    Taro.navigateTo({ url: '/pages/sales/index' });
+  };
+
+  const goToProducts = () => {
+    Taro.navigateTo({ url: '/pages/products/index' });
+  };
+
+  const goToCustomers = () => {
+    Taro.navigateTo({ url: '/pages/customers/index' });
+  };
+
+  const handleProductClick = (product: Product) => {
+    Taro.navigateTo({
+      url: `/pages/product-detail/index?id=${product.id}`,
+    });
+  };
+
+  const handleCustomerClick = (customer: Customer) => {
+    Taro.navigateTo({
+      url: `/pages/customer-detail/index?id=${customer.id}`,
+    });
   };
 
   return (
@@ -52,6 +125,7 @@ const LedgerPage: React.FC = () => {
       scrollY
       onRefresherRefresh={handleRefresh}
       refresherEnabled
+      refresherTriggered={refreshing}
     >
       <View className={styles.header}>
         <Text className={styles.title}>经营台账</Text>
@@ -60,29 +134,29 @@ const LedgerPage: React.FC = () => {
         <View className={styles.summaryCard}>
           <View className={styles.summaryRow}>
             <View className={styles.summaryItem}>
-              <Text className={styles.summaryLabel}>本月收入</Text>
+              <Text className={styles.summaryLabel}>总收入</Text>
               <View className={classNames(styles.summaryValue, styles.income)}>
-                ¥{formatMoney(monthSummary.income)}
+                ¥{formatCurrency(monthSummary.income)}
               </View>
             </View>
             <View className={styles.summaryItem}>
-              <Text className={styles.summaryLabel}>本月支出</Text>
+              <Text className={styles.summaryLabel}>总支出</Text>
               <View className={classNames(styles.summaryValue, styles.expense)}>
-                ¥{formatMoney(monthSummary.expense)}
+                ¥{formatCurrency(monthSummary.expense)}
               </View>
             </View>
           </View>
           <View className={styles.summaryRow}>
             <View className={styles.summaryItem}>
-              <Text className={styles.summaryLabel}>本月利润</Text>
+              <Text className={styles.summaryLabel}>净利润</Text>
               <View className={classNames(styles.summaryValue, styles.profit)}>
-                ¥{formatMoney(monthSummary.profit)}
+                ¥{formatCurrency(monthSummary.profit)}
               </View>
             </View>
             <View className={styles.summaryItem}>
               <Text className={styles.summaryLabel}>今日收入</Text>
               <View className={styles.summaryValue}>
-                ¥{formatMoney(workshopStats.todayIncome)}
+                ¥{formatCurrency(todayIncome)}
               </View>
             </View>
           </View>
@@ -124,7 +198,10 @@ const LedgerPage: React.FC = () => {
                 <View className={styles.decor} />
                 <Text className={styles.titleText}>收支明细</Text>
               </View>
-              <Text className={styles.actionBtn}>+ 记一笔</Text>
+              <View className={styles.actionRow}>
+                <Text className={styles.seeAllBtn} onClick={goToSales}>全部 →</Text>
+                <Text className={styles.actionBtn} onClick={handleAddLedger}>+ 记一笔</Text>
+              </View>
             </View>
 
             <View className={styles.categoryFilter}>
@@ -155,7 +232,7 @@ const LedgerPage: React.FC = () => {
             </View>
 
             <View className={styles.ledgerList}>
-              {filteredRecords.map((record) => (
+              {filteredRecords.slice(0, 10).map((record) => (
                 <View key={record.id} className={styles.ledgerItem}>
                   <View
                     className={classNames(styles.ledgerIcon, {
@@ -163,11 +240,11 @@ const LedgerPage: React.FC = () => {
                       [styles.expenseIcon]: record.type === 'expense',
                     })}
                   >
-                    {record.type === 'income' ? '💰' : '💸'}
+                    {getCategoryIcon(record.type, record.category)}
                   </View>
                   <View className={styles.ledgerInfo}>
                     <Text className={styles.ledgerTitle}>
-                      {getCategoryName(record.type, record.category)}
+                      {record.categoryName}
                     </Text>
                     <Text className={styles.ledgerDesc}>{record.description}</Text>
                   </View>
@@ -178,14 +255,21 @@ const LedgerPage: React.FC = () => {
                         [styles.expense]: record.type === 'expense',
                       })}
                     >
-                      {record.type === 'income' ? '+' : '-'}¥{formatMoney(record.amount)}
+                      {record.type === 'income' ? '+' : '-'}¥{formatCurrency(record.amount)}
                     </View>
                     <Text className={styles.amountTime}>
-                      {formatDate(record.createTime)}
+                      {record.createTime}
                     </Text>
                   </View>
                 </View>
               ))}
+              {filteredRecords.length === 0 && (
+                <View className={styles.emptyTip}>
+                  <Text style={{ fontSize: 24, color: '#999', textAlign: 'center', padding: '48rpx 0' }}>
+                    暂无收支记录
+                  </Text>
+                </View>
+              )}
             </View>
           </>
         )}
@@ -197,13 +281,16 @@ const LedgerPage: React.FC = () => {
                 <View className={styles.decor} />
                 <Text className={styles.titleText}>成品库存</Text>
               </View>
-              <Text className={styles.actionBtn}>+ 新增成品</Text>
+              <View className={styles.actionRow}>
+                <Text className={styles.seeAllBtn} onClick={goToProducts}>全部 →</Text>
+                <Text className={styles.actionBtn} onClick={handleAddProduct}>+ 新增成品</Text>
+              </View>
             </View>
 
             <View className={styles.statGrid}>
               <View className={styles.statCard}>
-                <View className={styles.statNum}>{workshopStats.productCount}</View>
-                <Text className={styles.statLabel}>成品总数</Text>
+                <View className={styles.statNum}>{stats.productStock}</View>
+                <Text className={styles.statLabel}>库存总数</Text>
               </View>
               <View className={styles.statCard}>
                 <View className={styles.statNum}>{products.length}</View>
@@ -216,12 +303,24 @@ const LedgerPage: React.FC = () => {
             </View>
 
             <View className={styles.productGrid}>
-              {products.map((product) => (
-                <View key={product.id} className={styles.productItem}>
+              {products.slice(0, 4).map((product) => (
+                <View
+                  key={product.id}
+                  className={styles.productItem}
+                  onClick={() => handleProductClick(product)}
+                >
                   <ProductCard product={product} />
                 </View>
               ))}
             </View>
+
+            {products.length === 0 && (
+              <View className={styles.emptyTip}>
+                <Text style={{ fontSize: 24, color: '#999', textAlign: 'center', padding: '48rpx 0' }}>
+                  暂无成品
+                </Text>
+              </View>
+            )}
           </>
         )}
 
@@ -232,31 +331,47 @@ const LedgerPage: React.FC = () => {
                 <View className={styles.decor} />
                 <Text className={styles.titleText}>客户列表</Text>
               </View>
-              <Text className={styles.actionBtn}>+ 新增客户</Text>
+              <View className={styles.actionRow}>
+                <Text className={styles.seeAllBtn} onClick={goToCustomers}>全部 →</Text>
+                <Text className={styles.actionBtn} onClick={handleAddCustomer}>+ 新增客户</Text>
+              </View>
             </View>
 
             <View className={styles.statGrid}>
               <View className={styles.statCard}>
-                <View className={styles.statNum}>{workshopStats.customerCount}</View>
+                <View className={styles.statNum}>{stats.customerCount}</View>
                 <Text className={styles.statLabel}>客户总数</Text>
               </View>
               <View className={styles.statCard}>
-                <View className={styles.statNum}>
-                  {customers.filter((c) => c.level !== 'normal').length}
-                </View>
+                <View className={styles.statNum}>{vipCount}</View>
                 <Text className={styles.statLabel}>VIP客户</Text>
               </View>
               <View className={styles.statCard}>
-                <View className={styles.statNum}>3</View>
-                <Text className={styles.statLabel}>本月新增</Text>
+                <View className={styles.statNum}>
+                  {customers.filter((c) => c.lastOrderTime).length}
+                </View>
+                <Text className={styles.statLabel}>已消费</Text>
               </View>
             </View>
 
             <View className={styles.customerList}>
-              {customers.map((customer) => (
-                <CustomerCard key={customer.id} customer={customer} />
+              {customers.slice(0, 5).map((customer) => (
+                <View
+                  key={customer.id}
+                  onClick={() => handleCustomerClick(customer)}
+                >
+                  <CustomerCard customer={customer} />
+                </View>
               ))}
             </View>
+
+            {customers.length === 0 && (
+              <View className={styles.emptyTip}>
+                <Text style={{ fontSize: 24, color: '#999', textAlign: 'center', padding: '48rpx 0' }}>
+                  暂无客户
+                </Text>
+              </View>
+            )}
           </>
         )}
       </View>

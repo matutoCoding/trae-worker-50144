@@ -282,3 +282,19 @@
   font-size: $font-size-sm;
   color: $color-text-tertiary;
 }
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.seeAllBtn {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.emptyTip {
+  @include card;
+  margin-bottom: $spacing-md;
+}

@@ -1,0 +1,211 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.header {
+  background: linear-gradient(135deg, #2C2C2C 0%, #4A4A4A 100%);
+  padding: $spacing-xl $page-padding;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+  padding: $spacing-md $page-padding;
+  background: $color-bg-card;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-gold;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.list {
+  padding: $spacing-md $page-padding;
+}
+
+.orderCard {
+  @include card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.orderHeader {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+}
+
+.orderNo {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.orderType {
+  padding: 4rpx 16rpx;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  background: $gradient-ethnic;
+  color: $color-gold;
+}
+
+.orderInfo {
+  margin-bottom: $spacing-md;
+}
+
+.productName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.customerInfo {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.stepper {
+  position: relative;
+  padding-left: 32rpx;
+}
+
+.stepItem {
+  position: relative;
+  padding-bottom: $spacing-lg;
+  
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.stepDot {
+  position: absolute;
+  left: -32rpx;
+  top: 4rpx;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: $radius-round;
+  background: $color-border;
+  border: 4rpx solid $color-bg-card;
+  z-index: 2;
+}
+
+.completed .stepDot {
+  background: $gradient-ethnic;
+  border-color: $color-gold;
+}
+
+.current .stepDot {
+  background: $gradient-ethnic;
+  border-color: $color-gold;
+  box-shadow: 0 0 0 8rpx rgba(218, 165, 32, 0.2);
+}
+
+.stepLine {
+  position: absolute;
+  left: -22rpx;
+  top: 28rpx;
+  width: 4rpx;
+  height: calc(100% - 24rpx);
+  background: $color-border-light;
+  z-index: 1;
+}
+
+.stepItem:last-child .stepLine {
+  display: none;
+}
+
+.completed .stepLine {
+  background: $color-gold;
+}
+
+.stepContent {
+  padding-left: $spacing-md;
+}
+
+.stepName {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-tertiary;
+  margin-bottom: 4rpx;
+}
+
+.completed .stepName, .current .stepName {
+  color: $color-text-primary;
+}
+
+.stepTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.stepAction {
+  margin-top: $spacing-sm;
+}
+
+.stepBtn {
+  @include button-reset;
+  display: inline-block;
+  padding: $spacing-xs $spacing-md;
+  background: $gradient-ethnic;
+  color: $color-gold;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 96rpx 0;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.emptyIcon {
+  font-size: 96rpx;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  padding: $spacing-md $page-padding $spacing-sm;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.decor {
+  width: 6rpx;
+  height: $font-size-md;
+  background: $gradient-ethnic;
+  border-radius: $radius-xs;
+}

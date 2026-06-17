@@ -15,7 +15,7 @@ export interface Order {
   orderNo: string;
   customerId: string;
   customerName: string;
-  type: 'custom' | 'trade' | 'exchange';
+  type: 'custom' | 'wholesale' | 'exchange';
   typeName: string;
   patternId: string;
   patternName: string;
@@ -24,7 +24,7 @@ export interface Order {
   silverPurity: string;
   price: number;
   deposit: number;
-  status: 'pending' | 'melting' | 'drawing' | 'engraving' | 'welding' | 'polishing' | 'finished' | 'delivered';
+  status: 'pending' | 'melting' | 'drawing' | 'engraving' | 'welding' | 'polishing' | 'finished' | 'delivered' | 'cancelled';
   statusName: string;
   currentStep: number;
   totalSteps: number;
@@ -78,23 +78,34 @@ export interface Customer {
   id: string;
   name: string;
   phone: string;
-  level: 'normal' | 'vip' | 'svip';
+  gender?: 'male' | 'female' | 'unknown';
+  birthday?: string;
+  level: 'regular' | 'vip' | 'svip';
   levelName: string;
   totalOrders: number;
   totalAmount: number;
   lastOrderTime: string;
-  remark: string;
+  address?: string;
+  note?: string;
+  tags?: string[];
   createTime: string;
   avatar: string;
 }
+
+export type CustomerLevel = Customer['level'];
+
+export type LedgerCategory = string;
 
 export interface LedgerRecord {
   id: string;
   type: 'income' | 'expense';
   typeName: string;
-  category: string;
+  category: LedgerCategory;
+  categoryName: string;
   amount: number;
-  orderId?: string;
+  paymentMethod: string;
+  relatedOrderId?: string;
+  relatedOrderNo?: string;
   description: string;
   createTime: string;
   operator: string;
@@ -111,7 +122,18 @@ export interface WorkshopStats {
   customerCount: number;
 }
 
+export interface SilverRecord {
+  id?: string;
+  type: 'in' | 'out';
+  name: string;
+  weight: number;
+  purity?: string;
+  supplier?: string;
+  orderId?: string;
+  orderNo?: string;
+  time: string;
+}
+
 export type OrderStatus = Order['status'];
 export type OrderType = Order['type'];
 export type SilverType = SilverMaterial['type'];
-export type CustomerLevel = Customer['level'];

@@ -1,0 +1,206 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: calc(#{$button-height-lg} + #{$spacing-xl} + #{$safe-area-bottom});
+}
+
+.form {
+  padding: $spacing-md $page-padding;
+}
+
+.formSection {
+  @include card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.decor {
+  width: 6rpx;
+  height: $font-size-md;
+  background: $gradient-ethnic;
+  border-radius: $radius-xs;
+}
+
+.formItem {
+  margin-bottom: $spacing-lg;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  display: block;
+  
+  .required {
+    color: $color-error;
+    margin-right: 4rpx;
+  }
+}
+
+.input, .picker {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 $spacing-md;
+  background: $color-bg-secondary;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  color: $color-text-primary;
+  display: flex;
+  align-items: center;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: $spacing-md;
+  background: $color-bg-secondary;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  color: $color-text-primary;
+  line-height: 1.5;
+}
+
+.row {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.half {
+  flex: 1;
+}
+
+.genderTabs {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.genderBtn {
+  flex: 1;
+  text-align: center;
+  padding: $spacing-sm 0;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  background: $color-bg-secondary;
+  transition: all $transition-base;
+}
+
+.activeGender {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+}
+
+.levelItem {
+  @include card;
+  padding: $spacing-md;
+  margin-bottom: $spacing-sm;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  position: relative;
+  border: 2rpx solid transparent;
+  transition: all $transition-base;
+}
+
+.activeLevel {
+  border-color: $color-gold;
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(218, 165, 32, 0.05) 100%);
+}
+
+.levelIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-round;
+  background: $gradient-ethnic;
+  color: $color-gold;
+  font-size: $font-size-lg;
+  @include flex-center;
+  flex-shrink: 0;
+}
+
+.levelInfo {
+  flex: 1;
+}
+
+.levelName {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
+.levelDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.levelCheck {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: $radius-round;
+  border: 2rpx solid $color-border;
+  @include flex-center;
+  font-size: $font-size-xs;
+  color: transparent;
+  flex-shrink: 0;
+}
+
+.activeLevel .levelCheck {
+  background: $gradient-ethnic;
+  border-color: $color-gold;
+  color: $color-text-white;
+}
+
+.footerBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc(#{$spacing-md} + #{$safe-area-bottom});
+  background: $color-bg-card;
+  box-shadow: $shadow-float;
+  display: flex;
+  gap: $spacing-md;
+}
+
+.cancelBtn, .submitBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  transition: all $transition-base;
+  
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+.cancelBtn {
+  background: $color-bg-secondary;
+  color: $color-text-secondary;
+}
+
+.submitBtn {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+}

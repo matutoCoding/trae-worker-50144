@@ -9,8 +9,8 @@ export const orderStatusList = [
 ];
 
 export const orderTypeList = [
-  { id: 'custom', name: '定制订单' },
-  { id: 'trade', name: '批发订单' },
+  { id: 'custom', name: '专属定制' },
+  { id: 'wholesale', name: '批发订单' },
   { id: 'exchange', name: '以旧换新' },
 ];
 
@@ -95,7 +95,7 @@ export const orders: Order[] = [
     orderNo: 'MY20240618004',
     customerId: 'c004',
     customerName: '陈丽华',
-    type: 'trade',
+    type: 'wholesale',
     typeName: '批发订单',
     patternId: 'p003',
     patternName: '十二瓣花纹',

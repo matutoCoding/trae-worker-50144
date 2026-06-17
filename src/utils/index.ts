@@ -12,6 +12,8 @@ export const formatMoney = (amount: number, decimals = 2) => {
   return amount.toFixed(decimals);
 };
 
+export const formatCurrency = formatMoney;
+
 export const formatWeight = (weight: number) => {
   return `${weight.toFixed(2)}g`;
 };

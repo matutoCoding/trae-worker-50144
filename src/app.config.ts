@@ -7,7 +7,17 @@ export default defineAppConfig({
     'pages/pattern-detail/index',
     'pages/order-detail/index',
     'pages/customer-detail/index',
-    'pages/product-detail/index'
+    'pages/product-detail/index',
+    'pages/silver/index',
+    'pages/process/index',
+    'pages/products/index',
+    'pages/customers/index',
+    'pages/sales/index',
+    'pages/order-form/index',
+    'pages/silver-form/index',
+    'pages/product-form/index',
+    'pages/customer-form/index',
+    'pages/ledger-form/index'
   ],
   window: {
     backgroundTextStyle: 'light',

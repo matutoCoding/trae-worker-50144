@@ -359,3 +359,34 @@
   color: $color-text-secondary;
   line-height: 1.5;
 }
+
+.stockSummary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  padding: $spacing-md;
+  background: linear-gradient(135deg, #2C2C2C 0%, #4A4A4A 100%);
+  border-radius: $radius-lg;
+}
+
+.stockItem {
+  text-align: center;
+}
+
+.stockValue {
+  font-size: $font-size-base;
+  font-weight: $font-weight-bold;
+  color: $color-gold;
+  margin-bottom: 4rpx;
+}
+
+.stockLabel {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.emptyTip {
+  @include card;
+  margin-bottom: $spacing-md;
+}

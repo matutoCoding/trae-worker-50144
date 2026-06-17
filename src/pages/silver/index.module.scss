@@ -1,0 +1,208 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: calc(#{$button-height-lg} + #{$spacing-xl} + #{$safe-area-bottom});
+}
+
+.statsBar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-sm;
+  padding: $spacing-md $page-padding;
+  background: linear-gradient(135deg, #2C2C2C 0%, #4A4A4A 100%);
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-gold;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 4rpx;
+}
+
+.tabBar {
+  display: flex;
+  padding: $spacing-sm $page-padding;
+  background: $color-bg-card;
+  gap: $spacing-sm;
+  box-shadow: $shadow-card;
+}
+
+.tabBtn {
+  flex: 1;
+  text-align: center;
+  padding: $spacing-sm 0;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  transition: all $transition-base;
+}
+
+.activeTab {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.list {
+  padding: $spacing-md $page-padding;
+}
+
+.silverCard {
+  @include card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.silverHeader {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+}
+
+.silverName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.badge {
+  padding: 4rpx 16rpx;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  background: $gradient-ethnic;
+  color: $color-gold;
+}
+
+.silverInfo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+}
+
+.infoItem {
+  text-align: center;
+}
+
+.infoValue {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.infoLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.silverFooter {
+  @include flex-between;
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-border-light;
+}
+
+.supplier {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.inTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 96rpx 0;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.emptyIcon {
+  font-size: 96rpx;
+  margin-bottom: $spacing-md;
+}
+
+.actionBtn {
+  @include button-reset;
+  width: calc(100% - #{$page-padding} * 2);
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  background: $gradient-ethnic;
+  color: $color-text-white;
+  transition: all $transition-base;
+  position: fixed;
+  left: $page-padding;
+  right: $page-padding;
+  bottom: calc(#{$spacing-xl} + #{$safe-area-bottom});
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+.btnIcon {
+  font-size: $font-size-lg;
+}
+
+.recordItem {
+  @include card;
+  padding: $spacing-md;
+  margin-bottom: $spacing-sm;
+}
+
+.recordRow {
+  @include flex-between;
+  margin-bottom: $spacing-sm;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.recordType {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
+.recordWeight {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+}
+
+.inWeight {
+  color: $color-success;
+}
+
+.outWeight {
+  color: $color-error;
+}
+
+.recordInfo {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.recordTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}

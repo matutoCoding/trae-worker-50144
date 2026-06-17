@@ -1,9 +1,9 @@
 import type { Customer } from '@/types';
 
 export const customerLevels = [
-  { id: 'normal', name: '普通客户' },
-  { id: 'vip', name: 'VIP客户' },
-  { id: 'svip', name: 'SVIP客户' },
+  { id: 'regular', name: '普通客户', icon: '⭐', desc: '累计消费满0元' },
+  { id: 'vip', name: 'VIP客户', icon: '💎', desc: '累计消费满5000元' },
+  { id: 'svip', name: 'SVIP客户', icon: '👑', desc: '累计消费满20000元' },
 ];
 
 export const customers: Customer[] = [
@@ -37,7 +37,7 @@ export const customers: Customer[] = [
     id: 'c003',
     name: '王志强',
     phone: '135****9012',
-    level: 'normal',
+    level: 'regular',
     levelName: '普通客户',
     totalOrders: 2,
     totalAmount: 980,
@@ -76,7 +76,7 @@ export const customers: Customer[] = [
     id: 'c006',
     name: '赵文博',
     phone: '133****2345',
-    level: 'normal',
+    level: 'regular',
     levelName: '普通客户',
     totalOrders: 1,
     totalAmount: 1280,
@@ -89,7 +89,7 @@ export const customers: Customer[] = [
     id: 'c007',
     name: '孙晓燕',
     phone: '132****6789',
-    level: 'normal',
+    level: 'regular',
     levelName: '普通客户',
     totalOrders: 1,
     totalAmount: 2180,

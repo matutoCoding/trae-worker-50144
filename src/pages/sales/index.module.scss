@@ -1,0 +1,259 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: calc(#{$button-height-lg} + #{$spacing-xl} + #{$safe-area-bottom});
+}
+
+.statsCard {
+  background: linear-gradient(135deg, #2C2C2C 0%, #4A4A4A 100%);
+  margin: $spacing-md $page-padding;
+  border-radius: $radius-xl;
+  padding: $spacing-lg;
+  box-shadow: $shadow-float;
+}
+
+.mainStat {
+  text-align: center;
+  padding-bottom: $spacing-md;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1);
+  margin-bottom: $spacing-md;
+}
+
+.mainLabel {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: $spacing-xs;
+}
+
+.mainValue {
+  font-size: 48rpx;
+  font-weight: $font-weight-bold;
+  color: $color-gold;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}
+
+.incomeValue {
+  color: $color-success;
+}
+
+.expenseValue {
+  color: $color-error;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 4rpx;
+}
+
+.tabBar {
+  display: flex;
+  padding: $spacing-sm $page-padding;
+  background: $color-bg-card;
+  gap: $spacing-sm;
+  box-shadow: $shadow-card;
+}
+
+.tabBtn {
+  flex: 1;
+  text-align: center;
+  padding: $spacing-sm 0;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  transition: all $transition-base;
+}
+
+.activeTab {
+  background: $gradient-ethnic;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.list {
+  padding: $spacing-md $page-padding;
+}
+
+.recordCard {
+  @include card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.recordHeader {
+  @include flex-between;
+  margin-bottom: $spacing-sm;
+}
+
+.recordType {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.typeIcon {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  background: $gradient-ethnic;
+  @include flex-center;
+  font-size: $font-size-sm;
+  color: $color-gold;
+}
+
+.recordAmount {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+}
+
+.income {
+  color: $color-success;
+}
+
+.expense {
+  color: $color-error;
+}
+
+.recordBody {
+  @include flex-between;
+  margin-bottom: $spacing-sm;
+}
+
+.recordDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  @include text-ellipsis;
+  flex: 1;
+  margin-right: $spacing-sm;
+}
+
+.recordMethod {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+}
+
+.recordFooter {
+  @include flex-between;
+  padding-top: $spacing-sm;
+  border-top: 1rpx solid $color-border-light;
+}
+
+.recordCategory {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.recordTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 96rpx 0;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.emptyIcon {
+  font-size: 96rpx;
+  margin-bottom: $spacing-md;
+}
+
+.actionBtn {
+  @include button-reset;
+  width: calc(100% - #{$page-padding} * 2);
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  background: $gradient-ethnic;
+  color: $color-text-white;
+  transition: all $transition-base;
+  position: fixed;
+  left: $page-padding;
+  right: $page-padding;
+  bottom: calc(#{$spacing-xl} + #{$safe-area-bottom});
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+.btnIcon {
+  font-size: $font-size-lg;
+}
+
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.categoryRow {
+  @include flex-between;
+  padding: $spacing-md;
+  background: $color-bg-secondary;
+  border-radius: $radius-md;
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.categoryName {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+}
+
+.categoryAmount {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-gold;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin: $spacing-md 0 $spacing-sm;
+  padding: 0 $page-padding;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.decor {
+  width: 6rpx;
+  height: $font-size-md;
+  background: $gradient-ethnic;
+  border-radius: $radius-xs;
+}
