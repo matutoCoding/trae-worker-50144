@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, Input, Picker, ScrollView } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import Taro, { useDidShow, useRouter } from '@tarojs/taro';
 import classNames from 'classnames';
 import { useWorkshopStore } from '@/store/useWorkshopStore';
 import { silverTypes, purityList } from '@/data/silver';
@@ -9,7 +9,15 @@ import { formatWeight } from '@/utils';
 import styles from './index.module.scss';
 
 const SilverFormPage: React.FC = () => {
+  const router = useRouter();
   const [mode, setMode] = useState<'in' | 'out'>('in');
+
+  useDidShow(() => {
+    const modeParam = router.params?.mode;
+    if (modeParam === 'in' || modeParam === 'out') {
+      setMode(modeParam);
+    }
+  });
 
   const [name, setName] = useState('');
   const [purity, setPurity] = useState('999');

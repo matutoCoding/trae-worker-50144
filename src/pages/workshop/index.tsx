@@ -32,7 +32,11 @@ const WorkshopPage: React.FC = () => {
   }, [orders]);
 
   const handleAddSilver = () => {
-    Taro.navigateTo({ url: '/pages/silver-form/index' });
+    Taro.navigateTo({ url: '/pages/silver-form/index?mode=in' });
+  };
+
+  const handleUseSilver = () => {
+    Taro.navigateTo({ url: '/pages/silver-form/index?mode=out' });
   };
 
   const goToSilverPage = () => {
@@ -251,7 +255,7 @@ const WorkshopPage: React.FC = () => {
                 <View className={styles.actionBtnIcon}>📥</View>
                 <Text className={styles.actionBtnText}>银料入库</Text>
               </View>
-              <View className={styles.actionBtnCard} onClick={handleAddSilver}>
+              <View className={styles.actionBtnCard} onClick={handleUseSilver}>
                 <View className={styles.actionBtnIcon}>📤</View>
                 <Text className={styles.actionBtnText}>银料领用</Text>
               </View>

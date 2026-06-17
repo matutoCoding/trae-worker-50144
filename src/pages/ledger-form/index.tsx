@@ -10,8 +10,8 @@ import styles from './index.module.scss';
 
 const LedgerFormPage: React.FC = () => {
   const [type, setType] = useState<'income' | 'expense'>('income');
-  const [category, setCategory] = useState<LedgerCategory>('custom');
-  const [categoryName, setCategoryName] = useState('');
+  const [category, setCategory] = useState<string>('custom');
+  const [categoryName, setCategoryName] = useState('定制收入');
   const [amount, setAmount] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const [description, setDescription] = useState('');
@@ -44,11 +44,11 @@ const LedgerFormPage: React.FC = () => {
   }, [orders, orderSearch]);
 
   const isValid = useMemo(() => {
-    return amount && parseFloat(amount) > 0 && category;
-  }, [amount, category]);
+    return amount && parseFloat(amount) > 0 && category && currentCategory;
+  }, [amount, category, currentCategory]);
 
   const handleCategorySelect = (cat: any) => {
-    setCategory(cat.id as LedgerCategory);
+    setCategory(cat.id);
     setCategoryName(cat.name);
     if (!description) {
       setDescription(cat.name);
@@ -74,13 +74,14 @@ const LedgerFormPage: React.FC = () => {
       return;
     }
 
+    const finalCategoryName = currentCategory?.name || categoryName;
     addLedgerRecord({
       type,
-      category,
-      categoryName: currentCategory?.name || categoryName,
+      category: category as LedgerCategory,
+      categoryName: finalCategoryName,
       amount: parseFloat(amount),
       paymentMethod,
-      description: description || currentCategory?.name || '',
+      description: description || finalCategoryName,
       relatedOrderId: relatedOrderId || undefined,
       relatedOrderNo: relatedOrderNo || undefined,
     });
@@ -111,8 +112,9 @@ const LedgerFormPage: React.FC = () => {
             className={classNames(styles.tabBtn, { [styles.activeTab]: type === 'income' })}
             onClick={() => {
               setType('income');
-              setCategory('custom');
-              setCategoryName('');
+              const firstCat = incomeCategories[0];
+              setCategory(firstCat.id);
+              setCategoryName(firstCat.name);
             }}
           >
             收入
@@ -121,8 +123,9 @@ const LedgerFormPage: React.FC = () => {
             className={classNames(styles.tabBtn, { [styles.activeTab]: type === 'expense' })}
             onClick={() => {
               setType('expense');
-              setCategory('custom');
-              setCategoryName('');
+              const firstCat = expenseCategories[0];
+              setCategory(firstCat.id);
+              setCategoryName(firstCat.name);
             }}
           >
             支出

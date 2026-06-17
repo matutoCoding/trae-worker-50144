@@ -89,7 +89,8 @@ const SilverPage: React.FC = () => {
   );
 
   const handleAdd = () => {
-    Taro.navigateTo({ url: '/pages/silver-form/index' });
+    const mode = tab === 'stock' ? 'in' : 'out';
+    Taro.navigateTo({ url: `/pages/silver-form/index?mode=${mode}` });
   };
 
   return (
@@ -159,7 +160,7 @@ const SilverPage: React.FC = () => {
 
       <View className={styles.actionBtn} onClick={handleAdd}>
         <Text className={styles.btnIcon}>+</Text>
-        <Text>{tab === 'stock' ? '银料入库' : '新增记录'}</Text>
+        <Text>{tab === 'stock' ? '银料入库' : '银料领用'}</Text>
       </View>
     </ScrollView>
   );

@@ -7,7 +7,7 @@ export const incomeCategories = [
   { id: 'exchange', name: '以旧换新', icon: '♻️' },
   { id: 'deposit', name: '定金收入', icon: '💵' },
   { id: 'balance', name: '尾款收入', icon: '💎' },
-  { id: 'custom', name: '其他收入', icon: '📝' },
+  { id: 'other_income', name: '其他收入', icon: '📝' },
 ];
 
 export const expenseCategories = [
